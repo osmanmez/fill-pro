@@ -17,7 +17,7 @@
             margin-bottom: 20px;
         }
         .wizard {
-            max-width: 600px;
+            max-width: 900px;
             margin: 20px auto;
             background: #fff;
             padding: 20px;
@@ -30,13 +30,25 @@
         .step.active {
             display: block;
         }
+        .logo {
+            height: 50px;
+            margin-right: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Formulario Wizard</a>
+            <a class="navbar-brand" href="#">
+                <img src="https://via.placeholder.com/50" alt="Logo" class="logo">Formulario Wizard
+            </a>
             <div class="d-flex">
                 <button class="btn btn-outline-success" onclick="nuevaSolicitud()">Nueva Solicitud</button>
             </div>
@@ -46,52 +58,60 @@
     <div class="container d-flex justify-content-center">
         <div class="wizard">
             <form id="wizardForm" enctype="multipart/form-data">
-                <!-- Paso 1: Información Personal -->
+                <!-- Paso 1: Información del Director -->
                 <div id="step1" class="step active">
-                    <h3>Paso 1: Información Básica</h3>
-                    <div class="mb-3">
-                        <label>Nombre:</label>
-                        <input type="text" name="nombre" class="form-control">
+                    <h3>Paso 1: Información del Director</h3>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Nombre del Director:</label>
+                            <input type="text" name="nombreDirector" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>DPI:</label>
+                            <input type="text" name="dpi" class="form-control">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label>Apellido:</label>
-                        <input type="text" name="apellido" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label>Email:</label>
-                        <input type="email" name="email" class="form-control">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Teléfono:</label>
+                            <input type="text" name="telefonoDirector" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Correo Electrónico:</label>
+                            <input type="email" name="correoDirector" class="form-control">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Paso 2: Información de Contacto -->
+                <!-- Paso 2: Datos del Establecimiento -->
                 <div id="step2" class="step">
-                    <h3>Paso 2: Detalles de Contacto</h3>
-                    <div class="mb-3">
-                        <label>Teléfono:</label>
-                        <input type="text" name="telefono" class="form-control">
+                    <h3>Paso 2: Información del Establecimiento</h3>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Nombre del Establecimiento:</label>
+                            <input type="text" name="nombreEstablecimiento" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Dirección:</label>
+                            <input type="text" name="direccionEstablecimiento" class="form-control">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label>Dirección:</label>
-                        <input type="text" name="direccion" class="form-control">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Teléfono:</label>
+                            <input type="text" name="telefonoEstablecimiento" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Correo Electrónico:</label>
+                            <input type="email" name="correoEstablecimiento" class="form-control">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Paso 3: Información Adicional -->
+                <!-- Pantalla Final -->
                 <div id="step3" class="step">
-                    <h3>Paso 3: Información Adicional</h3>
-                    <div class="mb-3">
-                        <label>Comentarios:</label>
-                        <textarea name="comentarios" class="form-control"></textarea>
-                    </div>
-                </div>
-
-                <!-- Paso 4: Confirmación y Subida de Archivo -->
-                <div id="step4" class="step">
-                    <h3>Paso 4: Confirmación y Archivo</h3>
-                    <p>Descarga el formato de los campos llenados:</p>
-                    <button type="button" class="btn btn-primary mb-2" onclick="descargarFormulario()">Descargar Formato</button><br>
-                    <label>Adjuntar Archivo:</label>
-                    <input type="file" name="archivo" class="form-control">
+                    <h3>¡Felicidades!</h3>
+                    <p>Has completado el formulario exitosamente.</p>
                 </div>
 
                 <div class="d-flex justify-content-between mt-3">
@@ -102,6 +122,9 @@
             </form>
         </div>
     </div>
+    <footer>
+        &copy; 2025 Formulario Wizard. Todos los derechos reservados.
+    </footer>
     <script>
         let currentStep = 1;
         function showStep(step) {
@@ -112,7 +135,7 @@
             });
             document.getElementById('prev').disabled = step === 1;
             document.getElementById('next').disabled = step === steps.length;
-            document.getElementById('submit').disabled = step !== steps.length;
+            document.getElementById('submit').disabled = step !== (steps.length - 1);
         }
         function nextStep() {
             currentStep++;
@@ -121,15 +144,6 @@
         function prevStep() {
             currentStep--;
             showStep(currentStep);
-        }
-        function descargarFormulario() {
-            const formData = new FormData(document.getElementById('wizardForm'));
-            const json = JSON.stringify(Object.fromEntries(formData));
-            const blob = new Blob([json], { type: 'application/json' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'formulario.json';
-            link.click();
         }
         function nuevaSolicitud() {
             currentStep = 1;
