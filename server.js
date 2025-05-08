@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 // Middleware para servir archivos estáticos
+app.use('/form/', express.static(path.join(__dirname, 'public')));
 
 // Ruta principal que genera el GUID y redirige
 app.get('/form/', (req, res) => {
