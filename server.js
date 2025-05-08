@@ -7,6 +7,8 @@ const app = express();
 const PORT = 3000;
 
 
+app.use('/', express.static(path.join(__dirname, 'public')));
+
 // Ruta principal: acceso no autorizado
 app.get('/', (req, res) => {
     res.status(403).send(`
@@ -17,7 +19,6 @@ app.get('/', (req, res) => {
 });
 
 // Middleware para servir archivos estáticos
-app.use('/form/', express.static(path.join(__dirname, 'public')));
 
 // Ruta principal que genera el GUID y redirige
 app.get('/form/', (req, res) => {
