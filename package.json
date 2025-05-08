@@ -1,12 +1,24 @@
 {
-    "name": "express-basic",
-    "version": "1.0.0",
-    "description": "Proyecto básico con Express.js para servir HTML",
-    "main": "server.js",
-    "scripts": {
-      "start": "node server.js"
-    },
-    "dependencies": {
-      "express": "^4.18.2"
-    }
-  }
+  "name": "express-basic",
+  "version": "1.0.0",
+  "description": "Proyecto básico con Express.js para servir HTML",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "uuid": "^11.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osmanmez/fill-pro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osmanmez/fill-pro/issues"
+  },
+  "homepage": "https://github.com/osmanmez/fill-pro#readme"
+}
