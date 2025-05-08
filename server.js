@@ -4,11 +4,16 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware para archivos estáticos
+// Middleware para servir archivos estáticos desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ruta principal
+// Redirigir la raíz al formulario (/form)
 app.get('/', (req, res) => {
+    res.redirect('/form');
+});
+
+// Ruta del formulario
+app.get('/form', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
