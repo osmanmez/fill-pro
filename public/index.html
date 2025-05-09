@@ -55,8 +55,8 @@
         </div>
     </nav>
 
-    <div class="container d-flex justify-content-center">
-        <div class="wizard">
+    <div class="container-fluid d-flex justify-content-center">
+        <div class="wizard mx-auto col-10">
             <form id="wizardForm" enctype="multipart/form-data">
                 <input type="hidden" id="uuid" name="uuid">
                 <!-- Paso 1: Información del Director -->
@@ -109,8 +109,32 @@
                     </div>
                 </div>
 
-                <!-- Pantalla Final -->
                 <div id="step3" class="step">
+                    <h3>Paso 2: Información de las Instalaciones Deportivas</h3>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Nombre del Establecimiento:</label>
+                            <input type="text" name="nombreEstablecimiento" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Dirección:</label>
+                            <input type="text" name="direccionEstablecimiento" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Teléfono:</label>
+                            <input type="text" name="telefonoEstablecimiento" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Correo Electrónico:</label>
+                            <input type="email" name="correoEstablecimiento" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pantalla Final -->
+                <div id="step4" class="step">
                     <h3>¡Felicidades!</h3>
                     <p>Has completado el formulario exitosamente.</p>
                 </div>

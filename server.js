@@ -6,12 +6,12 @@ const app = express();
 const router = express.Router();
 
 // Middleware to serve static files from the "public" directory
-app.use('/my-app', express.static(path.join(__dirname, 'public')));
+app.use('/censo-2025', express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Redirigir a /my-app si el contexto no está presente
 app.get('/', (req, res) => {
-  res.redirect('/my-app');
+  res.redirect('/censo-2025');
 });
 
 // Ruta para generar el UUID y enviarlo al cliente
@@ -20,13 +20,8 @@ router.get('/uuid', (req, res) => {
     res.json({ uuid: uid });
 });
 
-// Define routes within the router
-router.get('/about', (req, res) => {
-  res.send('About page under context path');
-});
-
 // Mount the router on a context path
-app.use('/my-app', router);
+app.use('/censo-2025', router);
 
 // Start the server
 const port = process.env.PORT || 3000;
