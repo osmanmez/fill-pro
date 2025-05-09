@@ -4,7 +4,9 @@
   "description": "Proyecto básico con Express.js para servir HTML",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "npm install --omit=dev",
+    "deploy": "npm run build && npm start"
   },
   "dependencies": {
     "express": "^4.21.2",
