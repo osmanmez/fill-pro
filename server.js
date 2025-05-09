@@ -29,7 +29,7 @@ router.get('/about', (req, res) => {
 app.use('/my-app', router);
 
 // Start the server
-const port = 8080;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
