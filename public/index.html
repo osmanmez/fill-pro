@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,9 +14,11 @@
             margin: 0;
             padding: 0;
         }
+
         .navbar {
             margin-bottom: 20px;
         }
+
         .wizard {
             max-width: 900px;
             margin: 20px auto;
@@ -24,43 +27,94 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .step {
             display: none;
         }
+
         .step.active {
             display: block;
         }
-        .logo {
-            height: 50px;
-            margin-right: 10px;
+
+        .progress-bar {
+            height: 6px;
+            background-color: #d3d3d3;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 20px;
         }
-        footer {
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0;
+            background-color: #6c63ff;
+            transition: width 0.4s ease;
+        }
+
+        #finalForm {
+            display: none;
             text-align: center;
-            padding: 10px;
-            background-color: #f1f1f1;
             margin-top: 20px;
         }
+
+        .success-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            margin: auto;
+        }
+        .success-icon {
+            color: #4CAF50;
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+        .success-message {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .success-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .success-button {
+            padding: 10px 20px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .success-button:hover {
+            background-color: #357ae8;
+        }
+
+
     </style>
 </head>
+
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="static/logo.png" alt="Logo" class="logo">
-            </a>
-            <div class="d-flex">
-                <button class="btn btn-outline-success" onclick="nuevaSolicitud()">Nueva Solicitud</button>
-            </div>
+            <a class="navbar-brand" href="#">Wizard App</a>
         </div>
     </nav>
 
-    <div class="container-fluid d-flex justify-content-center">
-        <div class="wizard mx-auto col-10">
-            <form id="wizardForm" enctype="multipart/form-data">
-                <input type="hidden" id="uuid" name="uuid">
-                <!-- Paso 1: Información del Director -->
-                <div id="step1" class="step active">
+    <div class="container">
+        <div class="wizard" id="wizardForm">
+            <input type="hidden" id="uuid" name="uuid">
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+
+            <div id="stepContent">
+                <div class="step active">
                     <h3>Paso 1: Información del Director</h3>
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -68,132 +122,139 @@
                             <input type="text" name="nombreDirector" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label>DPI:</label>
-                            <input type="text" name="dpi" class="form-control">
+                            <label>Dirección del Director:</label>
+                            <input type="text" name="direccionDirector" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Municipio:</label>
+                            <input type="text" name="municipio" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Departamento:</label>
+                            <input type="text" name="departamento" class="form-control">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label>Teléfono:</label>
-                            <input type="text" name="telefonoDirector" class="form-control">
+                            <input type="text" name="telefono" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label>Correo Electrónico:</label>
-                            <input type="email" name="correoDirector" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Paso 2: Datos del Establecimiento -->
-                <div id="step2" class="step">
-                    <h3>Paso 2: Información del Establecimiento</h3>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label>Nombre del Establecimiento:</label>
-                            <input type="text" name="nombreEstablecimiento" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label>Dirección:</label>
-                            <input type="text" name="direccionEstablecimiento" class="form-control">
+                            <input type="email" name="correoElectronico" class="form-control">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label>Teléfono:</label>
-                            <input type="text" name="telefonoEstablecimiento" class="form-control">
+                            <label>Fecha de Nacimiento:</label>
+                            <input type="date" name="fechaNacimiento" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label>Correo Electrónico:</label>
-                            <input type="email" name="correoEstablecimiento" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <div id="step3" class="step">
-                    <h3>Paso 2: Información de las Instalaciones Deportivas</h3>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label>Nombre del Establecimiento:</label>
-                            <input type="text" name="nombreEstablecimiento" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label>Dirección:</label>
-                            <input type="text" name="direccionEstablecimiento" class="form-control">
+                            <label>Género:</label>
+                            <select name="genero" class="form-control">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label>Teléfono:</label>
-                            <input type="text" name="telefonoEstablecimiento" class="form-control">
+                            <label>Título Académico:</label>
+                            <input type="text" name="tituloAcademico" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label>Correo Electrónico:</label>
-                            <input type="email" name="correoEstablecimiento" class="form-control">
+                            <label>Nivel Académico:</label>
+                            <input type="text" name="nivelAcademico" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label>Renglón Presupuestario:</label>
+                            <input type="text" name="renglonPresupuestario" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Escalafón:</label>
+                            <input type="text" name="escalafon" class="form-control">
                         </div>
                     </div>
                 </div>
-
-                <!-- Pantalla Final -->
-                <div id="step4" class="step">
-                    <h3>¡Felicidades!</h3>
-                    <p>Has completado el formulario exitosamente.</p>
+                <div class="step">
+                    <h3>Paso 2: Dirección</h3>
+                    <label>Calle:</label>
+                    <input type="text" class="form-control mb-3">
+                    <label>Ciudad:</label>
+                    <input type="text" class="form-control mb-3">
+                    <label>Código Postal:</label>
+                    <input type="text" class="form-control mb-3">
                 </div>
-
-                <div class="d-flex justify-content-between mt-3">
-                    <button id="prev" class="btn btn-secondary" onclick="prevStep()" disabled>Anterior</button>
-                    <button id="next" class="btn btn-primary" onclick="nextStep()">Siguiente</button>
-                    <button type="submit" id="submit" class="btn btn-success" disabled>Enviar</button>
+                <div class="step">
+                    <h3>Paso 3: Información de Pago</h3>
+                    <label>Número de Tarjeta:</label>
+                    <input type="text" class="form-control mb-3">
+                    <label>Fecha de Expiración:</label>
+                    <input type="text" class="form-control mb-3">
+                    <label>CVV:</label>
+                    <input type="text" class="form-control mb-3">
                 </div>
-            </form>
+                <div class="step">
+                    <h3>Paso 4: Confirmación</h3>
+                    <p>Revisa y confirma la información ingresada.</p>
+                    <button class="btn btn-success" onclick="showFinalMessage()">Finalizar</button>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-3" id="buttonContainer">
+                <button class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">Siguiente</button>
+            </div>
+        </div>
+
+        <div id="finalForm">
+           <div class="success-container">
+            <div class="success-icon">✔️</div>
+            <div class="success-message">Congratulations!</div>
+            <div class="success-text">Your account is ready to submit proposals and get work.</div>
+            <a href="#" class="success-button">Go to Home</a>
+    </div>
         </div>
     </div>
-    <footer>
-        &copy; 2025 Formulario Wizard. Todos los derechos reservados.
-    </footer>
+
     <script>
         let currentStep = 1;
-        function showStep(step) {
-            const steps = document.querySelectorAll('.step');
-            steps.forEach((s, index) => {
-                s.classList.remove('active');
-                if (index === step - 1) s.classList.add('active');
-            });
-            document.getElementById('prev').disabled = step === 1;
-            document.getElementById('next').disabled = step === steps.length;
-            document.getElementById('submit').disabled = step !== (steps.length - 1);
+        const totalSteps = 4;
+
+        function updateProgressBar() {
+            const progressFill = document.getElementById('progressFill');
+            const progress = (currentStep / totalSteps) * 100;
+            progressFill.style.width = progress + '%';
         }
+
         function nextStep() {
-            currentStep++;
-            showStep(currentStep);
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateProgressBar();
+            } else if (currentStep === totalSteps) {
+                showFinalMessage();
+            }
         }
+
         function prevStep() {
-            currentStep--;
-            showStep(currentStep);
-        }
-        function nuevaSolicitud() {
-            currentStep = 1;
-            showStep(currentStep);
-            document.getElementById('wizardForm').reset();
+            if (currentStep > 1) {
+                currentStep--;
+                updateProgressBar();
+            }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Obtener el UUID generado desde el servidor
-            fetch('/my-app/uuid')
-                .then(response => response.json())
-                .then(data => {
+        function showFinalMessage() {
+            document.getElementById('wizardForm').style.display = 'none';
+            document.getElementById('finalForm').style.display = 'block';
+        }
 
-                    console.log(data)
-                    const uuidInput = document.getElementById('uuid');
-                    if (uuidInput) {
-                        uuidInput.value = data.uuid;
-                    } else {
-                        console.error('Elementos del formulario no encontrados.');
-                    }
-                })
-                .catch(error => console.error('Error al obtener el UUID:', error));
-        });
-
+        updateProgressBar();
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
