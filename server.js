@@ -2,12 +2,16 @@ const express = require('express');
 const path = require('path');
 
 const { v4: uuidv4 } = require('uuid'); // Importar el generador de UUID
+const userRoutes = require('./routes/userRoutes');
 const app = express();
 const router = express.Router();
 
 // Middleware to serve static files from the "public" directory
 app.use('/censo-2025', express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json());
+app.use('/api', userRoutes);
 
 // Redirigir a /my-app si el contexto no está presente
 app.get('/', (req, res) => {
