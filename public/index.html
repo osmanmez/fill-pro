@@ -66,21 +66,25 @@
             max-width: 400px;
             margin: auto;
         }
+
         .success-icon {
             color: #4CAF50;
             font-size: 50px;
             margin-bottom: 15px;
         }
+
         .success-message {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
         }
+
         .success-text {
             font-size: 16px;
             margin-bottom: 20px;
             color: #555;
         }
+
         .success-button {
             padding: 10px 20px;
             background-color: #4285f4;
@@ -91,11 +95,10 @@
             text-decoration: none;
             font-size: 16px;
         }
+
         .success-button:hover {
             background-color: #357ae8;
         }
-
-
     </style>
 </head>
 
@@ -107,19 +110,20 @@
     </nav>
 
     <div class="container">
-        <div class="wizard" id="wizardForm">
-            <input type="hidden" id="uuid" name="uuid">
-            <div class="progress-bar">
-                <div class="progress-bar-fill" id="progressFill"></div>
-            </div>
+        <div class="wizard  mx-auto col-10" id="wizardContainer">
+            <form id="wizardForm" enctype="multipart/form-data">
+                <input type="hidden" id="uuid" name="uuid">
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" id="progressFill"></div>
+                </div>
 
-            <div id="stepContent">
-                <div class="step active">
+                <!-- Step containers -->
+                <div class="step active" id="step1">
                     <h3>Paso 1: Información del Director</h3>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label>Nombre del Director:</label>
-                            <input type="text" name="nombreDirector" class="form-control">
+                            <input type="text" name="nombreDirector" class="form-control" value="">
                         </div>
                         <div class="col-md-6">
                             <label>Dirección del Director:</label>
@@ -181,44 +185,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="step">
-                    <h3>Paso 2: Dirección</h3>
-                    <label>Calle:</label>
-                    <input type="text" class="form-control mb-3">
-                    <label>Ciudad:</label>
-                    <input type="text" class="form-control mb-3">
-                    <label>Código Postal:</label>
-                    <input type="text" class="form-control mb-3">
-                </div>
-                <div class="step">
-                    <h3>Paso 3: Información de Pago</h3>
-                    <label>Número de Tarjeta:</label>
-                    <input type="text" class="form-control mb-3">
-                    <label>Fecha de Expiración:</label>
-                    <input type="text" class="form-control mb-3">
-                    <label>CVV:</label>
-                    <input type="text" class="form-control mb-3">
-                </div>
-                <div class="step">
-                    <h3>Paso 4: Confirmación</h3>
-                    <p>Revisa y confirma la información ingresada.</p>
-                    <button class="btn btn-success" onclick="showFinalMessage()">Finalizar</button>
-                </div>
-            </div>
 
-            <div class="d-flex justify-content-between mt-3" id="buttonContainer">
-                <button class="btn btn-secondary" onclick="prevStep()">Anterior</button>
-                <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">Siguiente</button>
-            </div>
+                <div class="step" id="step2">
+                    <h3>Dirección</h3>
+                    <label>Calle:</label>
+                    <input type="text" name="calle" class="form-control mb-3">
+                    <label>Ciudad:</label>
+                    <input type="text" name="ciudad" class="form-control mb-3">
+                    <label>Código Postal:</label>
+                    <input type="text" name="codigoPostal" class="form-control mb-3">
+                </div>
+
+                <div class="step" id="step3">
+                    <h3>Información de Pago</h3>
+                    <label>Número de Tarjeta:</label>
+                    <input type="text" name="numeroTarjeta" class="form-control mb-3">
+                    <label>Fecha de Expiración:</label>
+                    <input type="text" name="fechaExpiracion" class="form-control mb-3">
+                    <label>CVV:</label>
+                    <input type="text" name="cvv" class="form-control mb-3">
+                </div>
+
+                <div class="step" id="step4">
+                    <h3>Confirmación</h3>
+                    <p>Revisa y confirma la información ingresada.</p>
+                </div>
+
+                <div class="d-flex justify-content-between mt-3" id="buttonContainer">
+                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                    <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">Siguiente</button>
+                </div>
+
+            </form>
         </div>
 
         <div id="finalForm">
-           <div class="success-container">
-            <div class="success-icon">✔️</div>
-            <div class="success-message">Congratulations!</div>
-            <div class="success-text">Your account is ready to submit proposals and get work.</div>
-            <a href="#" class="success-button">Go to Home</a>
-    </div>
+            <div class="success-container">
+                <div class="success-icon">✔️</div>
+                <div class="success-message">Congratulations!</div>
+                <div class="success-text">Your account is ready to submit proposals and get work.</div>
+                <a href="#" class="success-button">Go to Home</a>
+            </div>
         </div>
     </div>
 
@@ -232,11 +239,20 @@
             progressFill.style.width = progress + '%';
         }
 
+        function cacheFormData() {
+            const fields = document.querySelectorAll('.step.active input');
+            fields.forEach(field => {
+                localStorage.setItem(field.name, field.value);
+            });
+        }
+
         function nextStep() {
             if (currentStep < totalSteps) {
                 currentStep++;
                 updateProgressBar();
+                showStep(currentStep);
             } else if (currentStep === totalSteps) {
+                finalizarProceso();
                 showFinalMessage();
             }
         }
@@ -245,15 +261,29 @@
             if (currentStep > 1) {
                 currentStep--;
                 updateProgressBar();
+                showStep(currentStep);
             }
         }
 
+        function finalizarProceso() {
+            //alert("Datos enviados: " + JSON.stringify(localStorage));
+            alert("Datos enviados de prueba.")
+        }
+
+        function showStep(step) {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((el, index) => {
+                el.classList.toggle('active', index + 1 === step);
+            });
+        }
+
         function showFinalMessage() {
-            document.getElementById('wizardForm').style.display = 'none';
+            document.getElementById('wizardContainer').style.display = 'none';
             document.getElementById('finalForm').style.display = 'block';
         }
 
         updateProgressBar();
+        showStep(currentStep);
     </script>
 </body>
 
