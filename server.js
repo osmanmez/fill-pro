@@ -14,9 +14,9 @@ app.use(express.json());
 app.use('/api', userRoutes);
 
 // Redirigir a /my-app si el contexto no está presente
-s.redirect('/censo-2025');
-});app.get('/', (req, res) => {
-  re
+app.get('/', (req, res) => {
+  res.redirect('/censo-2025');
+});
 
 // Ruta para generar el UUID y enviarlo al cliente
 router.get('/uuid', (req, res) => {
