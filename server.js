@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-
+const pdfRoutes = require('./routes/pdfRoutes');
 const { v4: uuidv4 } = require('uuid'); // Importar el generador de UUID
 const userRoutes = require('./routes/userRoutes');
 const app = express();
@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 app.use('/api', userRoutes);
+app.use('/api/pdf', pdfRoutes);
 
 // Redirigir a /my-app si el contexto no está presente
 app.get('/', (req, res) => {
