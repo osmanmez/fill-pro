@@ -10,6 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 const formularioRoutes = require('./routes/formularioRoutes');
 const pdfRoutes = require('./routes/pdfRoutes');
 const userRoutes = require('./routes/userRoutes');
+const apiRoutes = require('./routes/itemsRoutes');
 
 // Configuración de dotenv
 dotenv.config();
@@ -34,6 +35,7 @@ app.use(bodyParser.json());
 app.use('/api', userRoutes);
 app.use('/api/pdf', pdfRoutes);
 app.use('/api', formularioRoutes);
+app.use('/api/items', apiRoutes);
 
 // Redirección desde la raíz a /censo-2025
 app.get('/', async (req, res) => {
